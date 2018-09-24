@@ -49,7 +49,7 @@ hidden_layer_4_activations = tf.nn.relu(tf.matmul(hidden_layer_3_activations, w4
 hidden_layer_5_activations = tf.nn.relu(tf.matmul(hidden_layer_4_activations, w5) + b5)
 output = tf.nn.relu(tf.matmul(hidden_layer_5_activations, w6) + b6)
 
-mse_loss = tf.reduce_mean(tf.square(output - visible_placeholder)) # MSE(mean-squared-error) reconstruction loss 
+mse_loss = tf.reduce_mean(tf.square(output - visible_placeholder)) # MSE(mean-squared-error) reconstruction loss. Cross entropy loss tends to be asymmetric, which assigns erroneous extra penalty to some reconstructions
 
 optimizer = tf.train.AdamOptimizer(0.01)
 
