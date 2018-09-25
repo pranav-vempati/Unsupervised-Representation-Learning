@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from tensorflow.examples.tutorials.mnist import input_data
 
 '''
-TensorFlow implementation of a deep autoencoder
+TensorFlow implementation of a deep autoencoder that reconstructs MNIST handwritten digits
 '''
 
 num_displayed_images = 5
