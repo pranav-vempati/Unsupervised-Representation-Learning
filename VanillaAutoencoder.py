@@ -12,7 +12,7 @@ num_displayed_images = 5
 
 mnist = input_data.read_data_sets("MNIST_data", one_hot = True)
 
-num_visible_units = 784 # MNIST data is comprised of a 28x28 grid of pixels
+num_visible_units = 784 # MNIST image data is comprised of a 28x28 grid of pixels
 
 num_hidden1_units = 392
 
@@ -67,7 +67,7 @@ with tf.Session() as sess:
 			batch_examples, batch_targets = mnist.train.next_batch(batch_size)
 			sess.run(training, feed_dict = {visible_placeholder:batch_examples})
 		epochwise_loss = sess.run(mse_loss, feed_dict = {visible_placeholder:batch_examples})
-		print("Epoch: " + str(epoch + 1) + " Loss: " + str(epochwise_loss)) 
+		print("Epoch: " + str(epoch + 1) + " Loss: " + str(epochwise_loss)) # Log epoch-wise loss to stdou
 	reconstructions = sess.run(output, feed_dict = {visible_placeholder:mnist.test.images[:num_displayed_images]})
 
 	a, b = plt.subplots(2,10, figsize = (20,4))
