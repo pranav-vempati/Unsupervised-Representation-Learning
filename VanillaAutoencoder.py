@@ -67,7 +67,7 @@ with tf.Session() as sess:
 			batch_examples, batch_targets = mnist.train.next_batch(batch_size)
 			sess.run(training, feed_dict = {visible_placeholder:batch_examples})
 		epochwise_loss = sess.run(mse_loss, feed_dict = {visible_placeholder:batch_examples})
-		print("Epoch: " + str(epoch + 1) + " Loss: " + str(epochwise_loss)) # Log epoch-wise loss to stdou
+		print("Epoch: " + str(epoch + 1) + " Loss: " + str(epochwise_loss)) # Log epoch-wise loss to stdout
 	reconstructions = sess.run(output, feed_dict = {visible_placeholder:mnist.test.images[:num_displayed_images]})
 
 	a, b = plt.subplots(2,10, figsize = (20,4))
