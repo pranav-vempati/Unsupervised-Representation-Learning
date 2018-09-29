@@ -3,6 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt 
 from tensorflow.examples.tutorials.mnist import input_data
 
+'''
+A denoising autoencoder that reconstructs MNIST digits
+'''
 
 num_displayed_images = 5
 
@@ -32,7 +35,7 @@ w5 = tf.Variable(tf.truncated_normal([num_hidden4_units, num_hidden5_units]), dt
 w6 = tf.Variable(tf.truncated_normal([num_hidden5_units, num_output_units]), dtype = tf.float32)
 
 
-b1 = tf.Variable(tf.zeros(num_hidden1_units)) # Layerwise intialization of the network's trainable bias vectors
+b1 = tf.Variable(tf.zeros(num_hidden1_units)) # Layerwise initialization of the network's trainable bias vectors
 b2 = tf.Variable(tf.zeros(num_hidden2_units))
 b3 = tf.Variable(tf.zeros(num_hidden3_units))
 b4 = tf.Variable(tf.zeros(num_hidden4_units))
@@ -40,8 +43,8 @@ b5 = tf.Variable(tf.zeros(num_hidden5_units))
 b6 = tf.Variable(tf.zeros(num_output_units))
 
 
-additive_noise = tf.random_normal([num_visible_units], mean = 0.0, stddev = 1.0, dtype = tf.float32)
-corrupted_layer = visible_placeholder + additive_noise
+gaussian_noise = tf.random_normal([num_visible_units], mean = 0.0, stddev = 1.0, dtype = tf.float32)
+corrupted_layer = visible_placeholder + gaussian_noise # Corrupt inputs with Gaussian additive noise
 hidden_layer_1_activations = tf.nn.relu(tf.matmul(corrupted_layer, w1) + b1)
 hidden_layer_2_activations = tf.nn.relu(tf.matmul(hidden_layer_1_activations, w2) + b2)
 hidden_layer_3_activations = tf.nn.relu(tf.matmul(hidden_layer_2_activations, w3) + b3)
@@ -49,7 +52,7 @@ hidden_layer_4_activations = tf.nn.relu(tf.matmul(hidden_layer_3_activations, w4
 hidden_layer_5_activations = tf.nn.relu(tf.matmul(hidden_layer_4_activations, w5) + b5)
 output = tf.nn.relu(tf.matmul(hidden_layer_5_activations, w6) + b6)
 
-mse_loss = tf.reduce_mean(tf.square(output - visible_placeholder)) # MSE(mean-squared-error) reconstruction loss. Cross entropy loss tends to be asymmetric, which assigns erroneous additional penalty to some reconstructions
+mse_loss = tf.reduce_mean(tf.square(output - visible_placeholder)) # MSE(mean-squared-error) reconstruction loss between the autoencoder's reconstructions and inputs. Cross entropy loss tends to be asymmetric, which assigns erroneous additional penalty to some reconstructions
 
 optimizer = tf.train.AdamOptimizer(0.01)
 
