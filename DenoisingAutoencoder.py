@@ -40,7 +40,7 @@ def log_tensor(tensor):
 	tf.summary.histogram('histogram', tensor)
 
 def network_layer(incoming_tensor, input_dim, output_dim, layer_name):
-	with tf.name_scope(layer_name):
+	with tf.name_scope(layer_name): # Hierarchical namespace definitions representing nodes in the computational graph that TensorBoard will display
 		with tf.name_scope("Weights"):
 			weights = weight_matrix(input_dim, output_dim)
 			log_tensor(weights)
