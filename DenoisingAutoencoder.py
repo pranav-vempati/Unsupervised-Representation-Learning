@@ -21,7 +21,7 @@ num_hidden5_units = num_hidden1_units
 
 num_output_units = num_visible_units
 
-visible_placeholder = tf.placeholder(tf.float32, shape = [None, num_visible_units]) # Define a placeholder for the MNIST images 
+visible_placeholder = tf.placeholder(tf.float32, shape = [None, num_visible_units]) # Define a placeholder for the input 
 
 def weight_matrix(input_dim, output_dim):
 	return tf.Variable(tf.truncated_normal([input_dim, output_dim]), dtype = tf.float32)
