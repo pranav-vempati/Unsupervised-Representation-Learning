@@ -51,7 +51,7 @@ def network_layer(incoming_tensor, input_dim, output_dim, layer_name):
 		tf.summary.histogram('activations', activations)
 		return activations
 
-def corrupt_inputs(pristine_inputs, additive_noise):
+def corrupt_inputs(pristine_inputs, additive_noise): # Inject a tensor encoding a Gaussian distribution of zero mean and unit variance to corrupt the inputs
 	return pristine_inputs + additive_noise
 
 gaussian_noise = tf.random_normal([num_visible_units], mean = 0.0, stddev = 1.0, dtype = tf.float32)
@@ -66,7 +66,7 @@ fifth_layer = network_layer(fourth_layer, num_hidden4_units, num_hidden5_units, 
 outputs = network_layer(fifth_layer, num_hidden5_units, num_output_units, "Output_Layer")
 
 with tf.name_scope("MSE_Loss"):
-	mse_loss = tf.reduce_mean(tf.square(outputs-visible_placeholder))
+	mse_loss = tf.reduce_mean(tf.square(outputs-visible_placeholder)) # Element wise reconstruction loss between the values emitted by the autoencoder and the original inputs
 tf.summary.scalar('MSE_Loss', mse_loss)
 
 with tf.name_scope("training"):
@@ -93,7 +93,7 @@ with tf.Session() as sess:
 			aggregate_batch_loss += batch_loss
 			event_writer.add_summary(batch_summary, num_batches*epoch + batch)
 		epochwise_loss = (aggregate_batch_loss/num_batches)
-		print("Epoch: " + str(epoch + 1) + " Loss: " + str(epochwise_loss)) # Log loss to stdout at every epoch
+		print("Epoch: " + str(epoch + 1) + " Loss: " + str(epochwise_loss)) # Logs loss to stdout at every epoch
 	training_summary,reconstructions = sess.run([merged,outputs], feed_dict = {visible_placeholder:mnist.test.images[:num_displayed_images]})
 
 
