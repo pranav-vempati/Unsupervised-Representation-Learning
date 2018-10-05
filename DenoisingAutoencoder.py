@@ -66,7 +66,7 @@ fifth_layer = network_layer(fourth_layer, num_hidden4_units, num_hidden5_units, 
 outputs = network_layer(fifth_layer, num_hidden5_units, num_output_units, "Output_Layer")
 
 with tf.name_scope("MSE_Loss"):
-	mse_loss = tf.reduce_mean(tf.square(outputs-visible_placeholder)) # Element wise reconstruction loss between the values emitted by the autoencoder and the original inputs
+	mse_loss = tf.reduce_mean(tf.square(outputs-visible_placeholder)) # Element wise reconstruction loss between the values emitted by the autoencoder and the original inputs. We don't use the KL divergence here - its distribution-wise assymetry tends to assign spurious loss values to particular reconstructions.  
 tf.summary.scalar('MSE_Loss', mse_loss)
 
 with tf.name_scope("training"):
@@ -99,8 +99,8 @@ with tf.Session() as sess:
 
 	a, b = plt.subplots(2,10, figsize = (20,4))
 	for index in range(num_displayed_images):
-		b[0][index].imshow(np.reshape(mnist.test.images[index],(28,28)))
-		b[1][index].imshow(np.reshape(reconstructions[index],(28,28)))
+		b[0][index].imshow(np.reshape(mnist.test.images[index],(28,28))) # Display reshaped images
+		b[1][index].imshow(np.reshape(reconstructions[index],(28,28))) 
 
 
 
