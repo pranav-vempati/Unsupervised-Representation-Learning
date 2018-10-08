@@ -66,7 +66,7 @@ fifth_layer = network_layer(fourth_layer, num_hidden4_units, num_hidden5_units, 
 outputs = network_layer(fifth_layer, num_hidden5_units, num_output_units, "Output_Layer")
 
 with tf.name_scope("MSE_Loss"):
-	mse_loss = tf.reduce_mean(tf.square(outputs-visible_placeholder)) # Element wise reconstruction loss between the values emitted by the autoencoder and the original inputs. We don't use the KL divergence here - its distribution-wise assymetry tends to assign spurious loss values to particular reconstructions.  
+	mse_loss = tf.reduce_mean(tf.square(outputs-visible_placeholder)) # Element wise reconstruction loss between the values emitted by the autoencoder and the original inputs. We don't use the KL divergence here - being asymmetric, it tends to assign spurious loss values to particular reconstructions.  
 tf.summary.scalar('MSE_Loss', mse_loss)
 
 with tf.name_scope("training"):
